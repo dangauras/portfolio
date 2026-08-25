@@ -1,16 +1,59 @@
-# React + Vite
+# 🌐 Animated Portfolio Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A sleek, responsive, and fully customizable **animated portfolio website** built using **React.js** and **Tailwind CSS**. This project gained **85K+ views** on [YouTube]([https://youtube.com/your-video-link](https://youtu.be/ypSc8HEurGQ?si=yI3GJCye3sAKoemW)) – loved by developers and students for its modern design and clean code.
 
-Currently, two official plugins are available:
+## 🚀 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+🔗 [View Portfolio Live](https://sureshdangaura.vercel.app/)
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- ⚛️ React.js
+- 🎨 Tailwind CSS
+- 💾 Vercel(for deployment)
 
-## Expanding the ESLint configuration
+## 📁 Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Responsive design for all screen sizes 📱💻
+- Smooth scroll and animation effects ✨
+- Clean and modular React components 🧩
+- Easy to customize with Tailwind utility classes 🎯
+- Professional sections: About, Skills, Projects, Contact, etc. 👨‍💻
+
+
+## 🧑‍💻 How to Use
+
+### 1. Clone the Repo
+
+```bash
+git clone [https://github.com/codingmastr/Suresh-s-Portfolio.git]
+cd your-repo-name
+````
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Run the App
+
+```bash
+npm start
+```
+
+### 4. Build for Production
+
+```bash
+npm run build
+```
+
+## 📹 YouTube Tutorial
+
+Watch the full build on YouTube:
+📺 [React Portfolio Website - 85K+ Views](https://youtu.be/ypSc8HEurGQ?si=winjJhc9qzNrCqLD)
+
+## 🌟 Credits
+
+This project was created with ❤️ by [Suresh Dangaura](https://sureshdangaura.vercel.app/).
+If you like it, feel free to ⭐ this repository and share!
