@@ -18,7 +18,7 @@ export default function Navbar({ darkMode, onToggleDarkMode }) {
   }, []);
 
   const navLinks = [
-    { name: 'Selected Works', href: '#works' },
+    { name: 'Gallery', href: '#works' },
     { name: 'Capabilities', href: '#capabilities' },
     { name: 'Philosophy', href: '#philosophy' },
     { name: 'Contact', href: '#contact' },

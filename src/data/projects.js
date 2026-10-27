@@ -2,6 +2,10 @@
  * Featured Design Projects Data
  * Pure JavaScript data source for the interactive portfolio gallery
  */
+import fintechProjectImage from '../assets/images/project_fintech_app_1793074942106.jpg';
+import brandProjectImage from '../assets/images/project_brand_identity_1793074942777.jpg';
+import audioProjectImage from '../assets/images/project_spatial_audio_1793074943902.jpg';
+import editorialProjectImage from '../assets/images/project_architectural_monograph_1793074943701.jpg';
 
 export const PROJECTS = [
   {
@@ -15,7 +19,7 @@ export const PROJECTS = [
     timeline: '5 Months',
     role: 'Lead Product Designer & Design Architect',
     featured: true,
-    coverImage: '/src/assets/images/project_fintech_app_1793074942106.jpg',
+    coverImage: fintechProjectImage,
     summary: 'A revolutionary cross-border wealth management experience built for private equity and digital assets. Crafted to balance dense financial telemetry with serene optical clarity.',
     challenge: 'Private wealth investors faced fragmented desktop dashboards with high cognitive overload and slow transaction workflows averaging 6.4 minutes.',
     solution: 'Designed an ambient, dark-mode native mobile OS with haptic micro-interactions, gesture-driven asset rebalancing, and instant frictionless transfers.',
@@ -56,7 +60,7 @@ export const PROJECTS = [
     timeline: '4 Months',
     role: 'Art Director & Packaging Designer',
     featured: true,
-    coverImage: '/src/assets/images/project_brand_identity_1793074942777.jpg',
+    coverImage: brandProjectImage,
     summary: 'An haute perfumery brand identity rooted in botanical alchemy and sustainable luxury. Encompassing custom typography, tactile blind debossing, and amber flacon design.',
     challenge: 'A legacy perfumery family needed to re-enter the ultra-luxury niche without falling into clinical modernism or dated Victorian tropes.',
     solution: 'Engineered a warm tactile identity with hand-illustrated wildflower engravings, unbleached linen textures, custom brass seal hardware, and museum-grade stationery.',
@@ -97,7 +101,7 @@ export const PROJECTS = [
     timeline: '6 Months',
     role: 'Principal UX & Interaction Designer',
     featured: true,
-    coverImage: '/src/assets/images/project_spatial_audio_1793074943902.jpg',
+    coverImage: audioProjectImage,
     summary: 'A hybrid hardware-software spatial workstation designed for film composers and electronic artists to sculpt immersive Dolby Atmos & binaural soundscapes.',
     challenge: 'Spatial audio tools in conventional DAWs were buried under cryptic coordinate fields and 2D panners that interrupted the musical creative flow.',
     solution: 'Created an ergonomic 3D spatial field where audio sources are manipulated like physical acoustic objects in an intuitive virtual room with real-time spectrum feedback.',
@@ -138,7 +142,7 @@ export const PROJECTS = [
     timeline: '3 Months',
     role: 'Editorial Director & Book Designer',
     featured: true,
-    coverImage: '/src/assets/images/project_architectural_monograph_1793074943701.jpg',
+    coverImage: editorialProjectImage,
     summary: 'A 280-page hardcover architectural monograph documenting brutalist structures across the Swiss Alps. Built on a rigorous 12-column Swiss typographic grid.',
     challenge: 'Translating the tactile mass, raw board-marked concrete grain, and monumental scale of alpine pavilions into an ink-on-paper editorial format.',
     solution: 'Designed a high-contrast layout pairing duotone architectural photography with structural axonometric diagrams and balanced asymmetric whitespace.',

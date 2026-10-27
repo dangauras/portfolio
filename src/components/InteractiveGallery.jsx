@@ -1,70 +1,77 @@
-import React, { useState, useMemo } from 'react';
-import { ArrowUpRight, Search, Eye, Sparkles, Filter } from 'lucide-react';
-import { PROJECTS, CATEGORIES } from '../data/projects.js';
+import React, { useMemo, useState } from 'react';
+import { ArrowUpRight, Eye, Search, Sparkles } from 'lucide-react';
+import { CATEGORIES, PROJECTS } from '../data/projects.js';
 
-/**
- * Interactive Project Gallery
- * Features:
- * - Category filter tabs (All, Product Design, Brand, Motion/Audio, Editorial)
- * - Search filter for live filtering
- * - Zero-pill metadata with typographic separators (discipline · client · year)
- * - Bento / Masonry card responsive grid with smooth hover transitions
- * - Modal trigger on project click
- */
 export default function InteractiveGallery({ onSelectProject }) {
   const [activeCategory, setActiveCategory] = useState('All Works');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Filtered projects memoized for fast rendering
   const filteredProjects = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+
     return PROJECTS.filter((project) => {
       const matchesCategory =
         activeCategory === 'All Works' || project.category === activeCategory;
-      const matchesSearch =
-        searchQuery.trim() === '' ||
-        project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.subtitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        project.deliverables.some((d) =>
-          d.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-      return matchesCategory && matchesSearch;
+      const searchableContent = [
+        project.title,
+        project.subtitle,
+        project.category,
+        project.client,
+        project.year,
+        ...project.deliverables,
+      ]
+        .join(' ')
+        .toLowerCase();
+
+      return matchesCategory && (!query || searchableContent.includes(query));
     });
   }, [activeCategory, searchQuery]);
 
+  const resetFilters = () => {
+    setActiveCategory('All Works');
+    setSearchQuery('');
+  };
+
   return (
-    <section id="works" className="py-20 md:py-28 border-b border-stone-200 dark:border-stone-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <div>
-            <div className="text-xs font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400 mb-2">
-              Portfolio Archive · 2024–2026
+    <section
+      id="works"
+      className="border-b border-stone-200 py-20 dark:border-stone-800 md:py-28"
+    >
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 flex flex-col justify-between gap-6 md:mb-14 md:flex-row md:items-end">
+          <div className="max-w-3xl">
+            <div className="mb-3 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-amber-700 dark:text-amber-400">
+              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
+              <span>Selected work · 2024—2026</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-stone-900 dark:text-white">
-              Selected Projects & Case Studies
+            <h2 className="text-3xl font-bold tracking-tight text-stone-900 dark:text-white sm:text-4xl lg:text-5xl">
+              Thoughtful work, built to make a difference.
             </h2>
           </div>
-          <p className="text-sm sm:text-base text-stone-600 dark:text-stone-400 max-w-md">
-            Click any project to explore the interactive case study, design system tokens, and tactile prototypes.
+          <p className="max-w-md text-sm leading-6 text-stone-600 dark:text-stone-400 sm:text-base">
+            A selection of digital products, identities, and visual systems shaped
+            around real people and ambitious ideas.
           </p>
         </div>
 
-        {/* Filter Bar & Search Row */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-10 pb-6 border-b border-stone-200 dark:border-stone-800">
-          {/* Category Filter Tabs */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-2 sm:pb-0 scrollbar-none" role="tablist" aria-label="Project categories">
+        <div className="mb-8 flex flex-col gap-5 border-y border-stone-200 py-5 dark:border-stone-800 lg:flex-row lg:items-center lg:justify-between">
+          <div
+            className="flex gap-2 overflow-x-auto pb-1 lg:flex-wrap lg:overflow-visible"
+            aria-label="Filter projects by category"
+          >
             {CATEGORIES.map((category) => {
               const isActive = activeCategory === category;
+
               return (
                 <button
                   key={category}
-                  role="tab"
-                  aria-selected={isActive}
+                  type="button"
+                  aria-pressed={isActive}
                   onClick={() => setActiveCategory(category)}
-                  className={`px-4 py-2 text-xs font-medium rounded-lg transition-all whitespace-nowrap shrink-0 ${
+                  className={`shrink-0 rounded-full border px-4 py-2 text-xs font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-stone-950 ${
                     isActive
-                      ? 'bg-stone-900 text-white dark:bg-stone-100 dark:text-stone-900 shadow-xs'
-                      : 'text-stone-600 dark:text-stone-400 hover:text-stone-950 dark:hover:text-stone-100 hover:bg-stone-100 dark:hover:bg-stone-900'
+                      ? 'border-stone-900 bg-stone-900 text-white dark:border-stone-100 dark:bg-stone-100 dark:text-stone-900'
+                      : 'border-stone-200 text-stone-600 hover:border-stone-400 hover:text-stone-950 dark:border-stone-800 dark:text-stone-400 dark:hover:border-stone-600 dark:hover:text-white'
                   }`}
                 >
                   {category}
@@ -73,124 +80,118 @@ export default function InteractiveGallery({ onSelectProject }) {
             })}
           </div>
 
-          {/* Search Input for fast query */}
-          <div className="relative w-full sm:w-64 shrink-0">
-            <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search projects or tokens..."
-              className="w-full pl-9 pr-4 py-2 text-xs rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500"
-              aria-label="Filter projects by title or deliverable"
+          <label className="relative block w-full lg:max-w-xs">
+            <Search
+              className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-stone-400"
+              aria-hidden="true"
             />
-            {searchQuery && (
-              <button
-                type="button"
-                onClick={() => setSearchQuery('')}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-stone-400 hover:text-stone-600 dark:hover:text-stone-200"
-              >
-                Clear
-              </button>
-            )}
-          </div>
+            <span className="sr-only">Search selected projects</span>
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="Search projects"
+              className="w-full rounded-full border border-stone-200 bg-white py-2.5 pl-10 pr-4 text-sm text-stone-900 placeholder:text-stone-400 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 dark:border-stone-800 dark:bg-stone-900 dark:text-stone-100"
+            />
+          </label>
         </div>
 
-        {/* Projects Grid */}
+        <p
+          className="mb-5 text-xs text-stone-500 dark:text-stone-400"
+          aria-live="polite"
+        >
+          Showing {filteredProjects.length} of {PROJECTS.length} projects
+        </p>
+
         {filteredProjects.length === 0 ? (
-          <div className="text-center py-20 border border-dashed border-stone-300 dark:border-stone-800 rounded-2xl">
-            <p className="text-base text-stone-600 dark:text-stone-400 mb-4">
-              No projects match your current filter criteria.
+          <div className="rounded-2xl border border-dashed border-stone-300 px-6 py-16 text-center dark:border-stone-800">
+            <p className="mb-4 text-sm text-stone-600 dark:text-stone-400">
+              No projects found. Try a different search or category.
             </p>
             <button
               type="button"
-              onClick={() => {
-                setActiveCategory('All Works');
-                setSearchQuery('');
-              }}
-              className="px-4 py-2 text-xs font-medium text-amber-700 dark:text-amber-400 hover:underline"
+              onClick={resetFilters}
+              className="text-sm font-semibold text-amber-700 hover:text-amber-600 focus:outline-none focus-visible:underline dark:text-amber-400"
             >
-              Reset all filters
+              Clear filters
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3 xl:gap-6">
             {filteredProjects.map((project, index) => {
-              // Bento layout: first project or specific cards can be highlighted
+              const isFeatured = index === 0;
+
               return (
                 <article
                   key={project.id}
-                  className="group flex flex-col rounded-2xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900/60 overflow-hidden shadow-xs hover:shadow-xl hover:border-amber-400/50 dark:hover:border-amber-500/50 transition-all duration-300"
+                  className={`group overflow-hidden rounded-2xl border border-stone-200 bg-white transition duration-300 hover:-translate-y-1 hover:border-amber-400/70 hover:shadow-xl hover:shadow-stone-900/5 dark:border-stone-800 dark:bg-stone-900/50 dark:hover:border-amber-500/50 dark:hover:shadow-black/20 ${
+                    isFeatured ? 'xl:col-span-2 xl:flex' : ''
+                  }`}
                 >
-                  {/* Media Frame */}
-                  <div
+                  <button
+                    type="button"
                     onClick={() => onSelectProject(project)}
-                    className="relative aspect-4/3 overflow-hidden bg-stone-100 dark:bg-stone-950 cursor-pointer"
+                    aria-label={`Open case study: ${project.title}`}
+                    className={`group/media relative block aspect-[4/3] w-full overflow-hidden bg-stone-100 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-amber-500 dark:bg-stone-950 ${
+                      isFeatured ? 'xl:aspect-auto xl:w-[58%]' : ''
+                    }`}
                   >
                     <img
                       src={project.coverImage}
-                      alt={`${project.title} - ${project.subtitle}`}
-                      className="w-full h-full object-cover object-center group-hover:scale-104 transition-transform duration-500 ease-out"
-                      referrerPolicy="no-referrer"
+                      alt=""
+                      className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover/media:scale-105"
                       loading="lazy"
                     />
-
-                    {/* Dark gradient overlay on hover */}
-                    <div className="absolute inset-0 bg-stone-950/20 group-hover:bg-stone-950/40 transition-colors duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                      <span className="px-4 py-2 text-xs font-semibold text-stone-950 bg-white/95 rounded-lg shadow-lg flex items-center gap-1.5 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                        <Eye className="w-3.5 h-3.5 text-stone-900" />
-                        <span>Open Case Study</span>
+                    <span className="absolute inset-0 flex items-end justify-between bg-gradient-to-t from-stone-950/65 via-transparent to-transparent p-5 opacity-0 transition-opacity duration-300 group-hover/media:opacity-100 group-focus-visible/media:opacity-100">
+                      <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-semibold text-stone-900 shadow-lg">
+                        <Eye className="h-3.5 w-3.5" aria-hidden="true" />
+                        View case study
                       </span>
-                    </div>
-                  </div>
+                      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-stone-900 shadow-lg">
+                        <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                      </span>
+                    </span>
+                  </button>
 
-                  {/* Card Content & Metadata */}
-                  <div className="p-6 sm:p-7 flex flex-col flex-1 justify-between">
-                    <div>
-                      {/* Zero-Pill Metadata (Clean typography with separators) */}
-                      <div className="flex items-center gap-2 text-xs text-stone-500 dark:text-stone-400 mb-2.5">
-                        <span className="font-semibold text-amber-700 dark:text-amber-400">
-                          {project.category}
-                        </span>
-                        <span aria-hidden="true">·</span>
-                        <span>{project.client}</span>
-                        <span aria-hidden="true">·</span>
-                        <span>{project.year}</span>
-                      </div>
-
-                      {/* Title */}
-                      <h3
-                        onClick={() => onSelectProject(project)}
-                        className="text-xl sm:text-2xl font-bold tracking-tight text-stone-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors cursor-pointer mb-2"
-                      >
-                        {project.title}
-                      </h3>
-
-                      {/* Subtitle */}
-                      <p className="text-sm text-stone-600 dark:text-stone-300 leading-relaxed mb-4 line-clamp-2">
-                        {project.subtitle}
-                      </p>
+                  <div
+                    className={`flex min-w-0 flex-1 flex-col p-5 sm:p-6 ${
+                      isFeatured ? 'xl:justify-center xl:p-8' : ''
+                    }`}
+                  >
+                    <div className="mb-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] font-medium uppercase tracking-wide text-stone-500 dark:text-stone-400">
+                      <span className="text-amber-700 dark:text-amber-400">
+                        {project.category}
+                      </span>
+                      <span aria-hidden="true">·</span>
+                      <span>{project.year}</span>
                     </div>
 
-                    {/* Key Metrics / Deliverables Preview & CTA */}
-                    <div className="pt-4 border-t border-stone-100 dark:border-stone-800/80 flex items-center justify-between">
-                      <div className="flex items-center gap-3 text-xs text-stone-500 dark:text-stone-400">
-                        <span className="font-medium text-stone-900 dark:text-stone-200">
-                          {project.impactMetrics[0].label}:
-                        </span>
-                        <span className="text-amber-600 dark:text-amber-400 font-bold tabular-nums">
+                    <h3
+                      className={`mb-2 font-semibold tracking-tight text-stone-900 transition-colors group-hover:text-amber-700 dark:text-white dark:group-hover:text-amber-400 ${
+                        isFeatured ? 'text-2xl sm:text-3xl' : 'text-xl'
+                      }`}
+                    >
+                      {project.title}
+                    </h3>
+                    <p className="mb-6 text-sm leading-6 text-stone-600 dark:text-stone-400">
+                      {project.subtitle}
+                    </p>
+
+                    <div className="mt-auto flex items-center justify-between gap-4 border-t border-stone-100 pt-4 dark:border-stone-800">
+                      <span className="min-w-0 truncate text-xs text-stone-500 dark:text-stone-400">
+                        {project.impactMetrics[0].label}:{' '}
+                        <span className="font-semibold text-stone-900 dark:text-stone-100">
                           {project.impactMetrics[0].value}
                         </span>
-                      </div>
-
+                      </span>
                       <button
                         type="button"
                         onClick={() => onSelectProject(project)}
-                        className="inline-flex items-center gap-1 text-xs font-semibold text-stone-900 dark:text-stone-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors focus:outline-none"
-                        aria-label={`View detailed case study for ${project.title}`}
+                        className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-stone-900 transition-colors hover:text-amber-700 focus:outline-none focus-visible:underline dark:text-stone-100 dark:hover:text-amber-400"
+                        aria-label={`Read the ${project.title} case study`}
                       >
-                        <span>Details</span>
-                        <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        Read case study
+                        <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
                       </button>
                     </div>
                   </div>

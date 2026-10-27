@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowDown, ArrowUpRight, Sparkles, Layers, ShieldCheck, Eye, ChevronRight } from 'lucide-react';
 import { DESIGNER_INFO, PROJECTS } from '../data/projects.js';
+import studioImage from '../assets/images/hero_designer_studio_1793074941737.jpg';
 
 /**
  * High-Impact Hero Section Component
@@ -21,7 +22,7 @@ export default function Hero({ onExploreClick, onSelectProject }) {
       id: 'studio-lab',
       title: 'Aetheria Studio Lab',
       category: 'Workspace & Prototyping',
-      image: '/src/assets/images/hero_designer_studio_1793074941737.jpg',
+      image: studioImage,
       stat: 'San Francisco & Tokyo Desk',
       isStudio: true,
     },
