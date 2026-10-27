@@ -1,20 +1,31 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Suresh Dangaura — Portfolio
 
-# Run and deploy your AI Studio app
+A personal portfolio showcasing product design, design systems, and brand identity work.
 
-This contains everything you need to run your app locally.
+## Tech stack
 
-View your app in AI Studio: https://ai.studio/apps/e598cc56-a69a-4698-bebb-78d9a61aba0f
+- React
+- Vite
+- Tailwind CSS
 
-## Run Locally
+## Development
 
-**Prerequisites:**  Node.js
+Requires Node.js and npm.
 
+```powershell
+npm install
+npm run dev
+```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Open the local URL printed by Vite (normally http://localhost:3000).
+
+## Production build
+
+```powershell
+npm run build
+npm run preview
+```
+
+## Deployment
+
+The project is configured for Vercel in `vercel.json`. Import the repository with its root directory as the project root; Vercel installs dependencies with `npm ci`, runs `npm run build`, and serves the `dist` output.
